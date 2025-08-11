@@ -1,103 +1,168 @@
-import Image from "next/image";
+"use client"
+
+import { useState, useEffect } from "react";
+import { GridBackground } from "@/components/Grid";
+import Projects from "@/components/HeroProjects";
+
+// ================= GitHub Stats =================
+interface GitHubUser {
+    login: string;
+    public_repos: number;
+    followers: number;
+}
+
+interface GitHubRepository {
+    stargazers_count: number;
+    forks_count: number;
+}
+
+interface GitHubStatsType {
+    repos: number;
+    followers: number;
+    stars: number;
+    forks: number;
+}
+
+const GitHubStats = () => {
+    const [stats, setStats] = useState<GitHubStatsType>({
+        repos: 0,
+        followers: 0,
+        stars: 0,
+        forks: 0,
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchGitHubStats = async () => {
+            try {
+                const username = "kurtoswill";
+
+                const userResponse = await fetch(
+                    `https://api.github.com/users/${username}`
+                );
+                const userData: GitHubUser = await userResponse.json();
+
+                const reposResponse = await fetch(
+                    `https://api.github.com/users/${username}/repos?per_page=100`
+                );
+                const reposData: GitHubRepository[] = await reposResponse.json();
+
+                const totalStars = reposData.reduce(
+                    (sum, repo) => sum + repo.stargazers_count,
+                    0
+                );
+                const totalForks = reposData.reduce(
+                    (sum, repo) => sum + repo.forks_count,
+                    0
+                );
+
+                setStats({
+                    repos: userData.public_repos,
+                    followers: userData.followers,
+                    stars: totalStars,
+                    forks: totalForks,
+                });
+            } catch (error) {
+                console.error("Error fetching GitHub stats:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchGitHubStats();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
+                {[...Array(4)].map((_, i) => (
+                    <div key={i} className="text-center animate-pulse">
+                        <div className="h-12 bg-gray-700 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-700 rounded w-20 mx-auto"></div>
+                    </div>
+                ))}
+            </div>
+        );
+    }
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto cursor-pointer">
+            {[
+                { value: stats.repos, label: "Repositories" },
+                { value: stats.followers, label: "Followers" },
+                { value: stats.stars, label: "Stars" },
+                { value: stats.forks, label: "Forks" },
+            ].map((item, idx) => (
+                <div key={idx} className="text-center group">
+                    <div className="flex flex-col items-center mb-2">
+                        <div className="text-4xl md:text-5xl font-bold text-white group-hover:scale-110 transition-transform duration-300">
+                            {item.value.toLocaleString()}
+                        </div>
+                    </div>
+                    <div className="text-gray-400 text-sm uppercase tracking-wider">
+                        {item.label}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    return (
+        <div className="text-white">
+            <section>
+                <GridBackground
+                    gridSize={100}
+                    gridColor="#e4e4e7"
+                    darkGridColor="#262626"
+                    showFade={true}
+                    fadeIntensity={10}
+                    className="min-h-screen"
+                >
+                    <div className="text-center pb-20">
+                        <h1 className="text-[120px] font-bold tracking-tight">
+                            Kurt Oswill McCarver
+                        </h1>
+                        <p className="text-2xl max-w-5xl mx-auto opacity-75">
+                            A developer focused on building innovative projects and exploring
+                            new tech through hackathons and events, based in the Philippines.
+                        </p>
+                        <GitHubStats />
+                    </div>
+                </GridBackground>
+            </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <section className="bg-[#080c14] py-20 text-center">
+                <div className="max-w-4xl mx-auto px-4 font-medium">
+                    <h2 className="text-4xl font-bold mb-6">About Me.</h2>
+                    <p className="text-xl text-white/75 leading-relaxed">
+                        I’m a <span className="text-white">Front-End Developer</span> moving into
+                        <span className="text-white"> Full-Stack Development</span> through
+                        <span className="text-white"> hackathons</span>. I mainly work with
+                        <span className="text-white"> Next.js</span> and
+                        <span className="text-white"> Supabase</span>, creating projects that
+                        <span className="text-white"> make an impact</span>.
+                    </p>
+                    <p className="text-xl text-white/75 leading-relaxed mt-4">
+                        I’m a <span className="text-white">Student Developer</span> at
+                        <span className="text-white"> AWS Spade</span> and had my first internship at
+                        <span className="text-white"> Bitskwela</span>. I enjoy
+                        <span className="text-white"> gaming</span>,
+                        <span className="text-white"> traveling</span>, movies,
+                        and <span className="text-white">F1</span>.
+                    </p>
+                    <p className="text-xl text-white/75 leading-relaxed mt-4">
+                        My goal is to <span className="text-white">learn as much as I can </span>
+                        in college while exploring <span className="text-white">business </span>
+                        and <span className="text-white">startups</span>.
+                    </p>
+                </div>
+            </section>
+
+            <Projects />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
+
+
+
