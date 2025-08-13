@@ -1,16 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 function Navbar() {
-    const [currentPath, setCurrentPath] = useState(
-        typeof window !== "undefined" ? window.location.pathname : "/"
-    );
+    const [currentPath, setCurrentPath] = useState<string | null>(null);
 
     useEffect(() => {
         const handleLocationChange = () => {
             setCurrentPath(window.location.pathname);
         };
+
+        // Initialize path after mount
+        handleLocationChange();
 
         window.addEventListener("popstate", handleLocationChange);
 
@@ -53,21 +55,21 @@ function Navbar() {
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-[80px]">
                     <div className="flex space-x-8">
-                        <a href="/" className={getActiveLinkStyle("/")}>
+                        <Link href="/" className={getActiveLinkStyle("/")}>
                             Home
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             href="/portfolio"
                             className={getActiveLinkStyle("/portfolio")}
                         >
                             Portfolio
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             href="/timeline"
                             className={getActiveLinkStyle("/timeline")}
                         >
                             Timeline
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="flex space-x-6">
@@ -79,12 +81,12 @@ function Navbar() {
                         >
                             GitHub
                         </a>
-                        <a
+                        <Link
                             href="/links"
                             className={getActiveLinkStyle("/links")}
                         >
                             Links
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

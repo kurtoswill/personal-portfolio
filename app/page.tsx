@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { GridBackground } from "@/components/Grid";
 import Projects from "@/components/HeroProjects";
+import Technology from "@/sanity/schemas/technology";
+import TechnologyList from "@/components/Technologies";
+import Contacts from "@/components/Contacts";
 
 // ================= GitHub Stats =================
 interface GitHubUser {
@@ -133,8 +136,8 @@ export default function Home() {
             </section>
 
             <section className="bg-[#080c14] py-20 text-center">
-                <div className="max-w-4xl mx-auto px-4 font-medium">
-                    <h2 className="text-4xl font-bold mb-6">About Me.</h2>
+                <div className="max-w-4xl mx-auto font-medium">
+                    <h2 className="text-5xl font-bold mb-6">About Me.</h2>
                     <p className="text-xl text-white/75 leading-relaxed">
                         I’m a <span className="text-white">Front-End Developer</span> moving into
                         <span className="text-white"> Full-Stack Development</span> through
@@ -160,6 +163,10 @@ export default function Home() {
             </section>
 
             <Projects />
+
+            <TechnologyList />
+
+            <Contacts />
         </div>
     );
 }
