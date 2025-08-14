@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaXTwitter } from "react-icons/fa6";
-import { FiSend } from "react-icons/fi";
+import { ArrowRight } from "lucide-react";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -47,21 +47,23 @@ export default function Contact() {
   ];
 
   return (
-    <section className="py-20 px-[150px] text-white">
-      <h2 className="text-5xl font-bold text-center">Contact me.</h2>
-      <p className="text-center text-gray-400 mt-2">
-        Want to order a project? Or do you just want to stay in touch?
+    <section className="py-16 px-6 sm:px-10 lg:px-[150px] text-white">
+      <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
+        Contact me.
+      </h2>
+      <p className="text-center text-white/75 mt-2 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
+        Have a question or want to work together? Fill out the form below or reach out via my socials.
       </p>
 
-      <div className="grid md:grid-cols-2 gap-10 mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="border border-gray-800 rounded-lg p-6 space-y-4"
+          className="border border-gray-800 rounded-lg p-4 sm:p-6 space-y-4"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 font-semibold">
+              <label className="block mb-1 font-semibold text-sm sm:text-base">
                 Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -70,12 +72,12 @@ export default function Contact() {
                 value={form.name}
                 onChange={handleChange}
                 placeholder="Juan Dela Cruz"
-                className="w-full py-2 px-3 rounded-md border border-gray-700 focus:border-gray-500 outline-none"
+                className="w-full py-2 px-3 rounded-md border border-gray-700 focus:border-gray-500 outline-none text-sm sm:text-base"
                 required
               />
             </div>
             <div>
-              <label className="block mb-1 font-semibold">
+              <label className="block mb-1 font-semibold text-sm sm:text-base">
                 Email Address <span className="text-red-500">*</span>
               </label>
               <input
@@ -84,14 +86,14 @@ export default function Contact() {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="juan@delacruz.com"
-                className="w-full py-2 px-3 rounded-md border border-gray-700 focus:border-gray-500 outline-none"
+                className="w-full py-2 px-3 rounded-md border border-gray-700 focus:border-gray-500 outline-none text-sm sm:text-base"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="block mb-1 font-semibold">
+            <label className="block mb-1 font-semibold text-sm sm:text-base">
               Message <span className="text-red-500">*</span>
             </label>
             <textarea
@@ -100,20 +102,24 @@ export default function Contact() {
               onChange={handleChange}
               rows={3}
               placeholder="Hello there!"
-              className="w-full py-2 px-3 rounded-md border border-gray-700 focus:border-gray-500 outline-none"
+              className="w-full py-2 px-3 rounded-md border border-gray-700 focus:border-gray-500 outline-none text-sm sm:text-base"
               required
               maxLength={500}
             />
-            <p className="text-sm text-gray-500 text-right">
+            <p className="text-xs sm:text-sm text-gray-500 text-right">
               {form.message.length} / 500
             </p>
           </div>
 
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 bg-purple-500 font-semibold rounded-lg py-2 px-5 w-full md:w-auto -mt-2 hover:bg-purple-600 transition-colors duration-300 cursor-pointer"
+            className="flex items-center justify-center gap-2 bg-white text-black font-semibold rounded-md py-2 px-5 w-full sm:w-auto hover:bg-gray-200 transition-colors duration-300 cursor-pointer"
           >
             Send
+            <ArrowRight
+              className="transition-transform duration-300 group-hover:translate-x-1 mt-0.5"
+              size={17}
+            />
           </button>
         </form>
 
@@ -126,9 +132,9 @@ export default function Contact() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between border border-gray-800 rounded-lg px-6 py-4 hover:border-gray-500 transition-all"
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0 rounded-lg px-4 sm:px-6 py-4 min-h-[50px] shadow-sm border border-gray-800 hover:bg-gray-800/50 hover:border-gray-700 transition-all duration-300"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 {social.icon}
                 <span className="font-medium">{social.name}</span>
               </div>

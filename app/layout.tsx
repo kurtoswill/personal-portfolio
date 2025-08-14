@@ -23,11 +23,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${poppins.variable} bg-[#080c14] px-[50px] antialiased font-sans`}
+                className={`${poppins.variable} bg-[#080c14] antialiased font-sans 
+                px-4 sm:px-6 md:px-10 lg:px-[50px]`}
             >
-            <Navbar />
-                {children}
-            <Footer />
+                <Navbar />
+                <main className="w-full">{children}</main>
+                <Footer />
             </body>
         </html>
     );
