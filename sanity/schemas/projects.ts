@@ -21,7 +21,7 @@ export default defineType({
       name: 'image',
       title: 'Project Image',
       type: 'image',
-      description: 'Screenshot or preview image of the project',
+      description: 'Screenshot or preview image of the project (optional)',
       options: {
         hotspot: true, // Enables cropping
       },
@@ -31,9 +31,15 @@ export default defineType({
           type: 'string',
           title: 'Alternative Text',
           description: 'Important for accessibility and SEO',
-          validation: (Rule) => Rule.required(),
         },
       ],
+    }),
+    defineField({
+      name: 'createdDate',
+      title: 'Project Creation Date',
+      type: 'date',
+      description: 'When you created this project',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'link',
@@ -64,6 +70,7 @@ export default defineType({
     select: {
       title: 'title',
       subtitle: 'description',
+      media: 'image',
     },
   },
 })

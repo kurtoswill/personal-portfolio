@@ -1,35 +1,58 @@
-import {createClient} from '@sanity/client'
+export interface Technology {
+  _id: string;
+  name: string;
+  category: 'frontend' | 'backend' | 'database' | 'devops' | 'mobile' | 'other';
+  color: string;
+}
 
-export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
-  useCdn: process.env.NODE_ENV === 'production',
-  apiVersion: '2024-01-01',
-})
+export interface SanityImage {
+  _type: 'image';
+  asset: {
+    _ref: string;
+    _type: 'reference';
+  };
+  hotspot?: {
+    x: number;
+    y: number;
+    height: number;
+    width: number;
+  };
+  crop?: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
+  alt?: string;
+}
 
-// GROQ query for fetching all projects
-export const projectsQuery = `*[_type == "project"] | order(_createdAt desc) {
-  _id,
-  title,
-  description,
-  link,
-  featured,
-  techStack[]->{
-    _id,
-    name,
-    category
-  }
-}`
+export interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  image?: SanityImage; // Now optional
+  link?: string;
+  featured?: boolean;
+  techStack?: Technology[];
+  createdDate: string; // New field for project creation date
+}
 
-// GROQ query for fetching only featured projects
-export const featuredProjectsQuery = `*[_type == "project" && featured == true] | order(_createdAt desc) {
-  _id,
-  title,
-  description,
-  link,
-  techStack[]->{
-    _id,
-    name,
-    category
-  }
-}`
+export interface Competition {
+  _id: string;
+  competitionName: string;
+  position: string;
+  teamName?: string; // Optional team name
+  projectName: string;
+  description: string;
+  competitionDate: string;
+  myRole: string;
+  link?: string; // Optional link
+}
+
+export interface Certification {
+  _id: string;
+  certificationName: string;
+  description: string;
+  dateAcquired: string;
+  link?: string;
+}

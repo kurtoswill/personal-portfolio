@@ -30,8 +30,29 @@ export interface Project {
   _id: string;
   title: string;
   description: string;
-  image?: SanityImage;
+  image?: SanityImage; // Now optional
   link?: string;
   featured?: boolean;
   techStack?: Technology[];
+  createdDate: string; // New field for project creation date
+}
+
+export interface Competition {
+  _id: string;
+  competitionName: string;
+  position: string;
+  teamName?: string;
+  projectName: string;
+  description: string;
+  competitionDate: string;
+  myRole: string;
+  link?: string;
+}
+
+export interface Certification {
+  _id: string;
+  certificationName: string;
+  description: string;
+  dateAcquired: string;
+  link?: string;
 }
