@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import { client, urlFor } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import { Project } from "@/types/sanity";
 import Link from "next/link";
 import { Folder, ArrowRight, Calendar } from "lucide-react";
