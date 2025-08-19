@@ -77,10 +77,10 @@ function Navbar() {
                             GitHub
                         </a>
                         <Link
-                            href="/links"
+                            href="/CV-2.pdf"
                             className={getActiveLinkStyle("/links")}
                         >
-                            RESUME
+                            CV
                         </Link>
                     </div>
                 </div>

@@ -472,9 +472,32 @@ export default function Portfolio() {
                 <h2 className="text-4xl md:text-5xl font-bold my-20">Portfolio</h2>
             </GridBackground>
 
-            {/* Tab Navigation */}
+            {/* Tab Navigation - Responsive */}
             <div className="flex justify-center mb-8">
-                <div className="inline-flex bg-[#0f141f] rounded-lg border border-gray-700 p-1">
+                {/* Mobile: Dropdown Style */}
+                <div className="sm:hidden w-full max-w-xs">
+                    <div className="relative">
+                        <select
+                            value={activeTab}
+                            onChange={(e) => setActiveTab(e.target.value as TabType)}
+                            className="w-full bg-[#0f141f] border border-gray-700 rounded-lg px-4 py-3 text-white appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            {tabs.map((tab) => (
+                                <option key={tab.id} value={tab.id} className="bg-[#0f141f] text-white">
+                                    {tab.label}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Tablet and up: Horizontal tabs */}
+                <div className="hidden sm:inline-flex bg-[#0f141f] rounded-lg border border-gray-700 p-1 flex-wrap justify-center gap-1">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
                         return (
@@ -482,15 +505,16 @@ export default function Portfolio() {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`
-                                    flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200
+                                    flex items-center gap-2 px-3 md:px-4 py-2 rounded-md text-xs md:text-sm font-semibold transition-all duration-200 whitespace-nowrap
                                     ${activeTab === tab.id
                                     ? 'bg-white/10 text-white shadow-sm'
                                     : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }
                                 `}
                             >
-                                <Icon className="w-4 h-4" />
-                                {tab.label}
+                                <Icon className="w-3 h-3 md:w-4 md:h-4" />
+                                <span className="hidden md:inline">{tab.label}</span>
+                                <span className="md:hidden">{tab.label.split(' ')[0]}</span>
                             </button>
                         );
                     })}
