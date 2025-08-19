@@ -56,3 +56,4 @@ export interface Certification {
   dateAcquired: string;
   link?: string;
 }
+

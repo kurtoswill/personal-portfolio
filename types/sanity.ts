@@ -30,11 +30,11 @@ export interface Project {
   _id: string;
   title: string;
   description: string;
-  image?: SanityImage; // Now optional
+  image?: SanityImage;
   link?: string;
   featured?: boolean;
   techStack?: Technology[];
-  createdDate: string; // New field for project creation date
+  createdDate: string;
 }
 
 export interface Competition {
@@ -55,4 +55,19 @@ export interface Certification {
   description: string;
   dateAcquired: string;
   link?: string;
+}
+
+export interface Experience {
+  _id: string;
+  jobTitle: string;
+  company: string;
+  location: string;
+  employmentType: 'full-time' | 'part-time' | 'contract' | 'freelance' | 'internship';
+  startDate: string;
+  endDate?: string;
+  current: boolean;
+  description: string;
+  keyAchievements?: string[];
+  techStack?: Technology[];
+  companyWebsite?: string;
 }

@@ -1,17 +1,18 @@
 "use client";
 import { GridBackground } from "@/components/Grid";
-import { client, projectsQuery, competitionsQuery, certificationsQuery } from "@/sanity/lib/client";
-import { Project, Competition, Certification } from "@/types/sanity";
-import { Folder, Trophy, Award, Calendar, User } from "lucide-react";
+import { client, projectsQuery, competitionsQuery, certificationsQuery, experiencesQuery } from "@/sanity/lib/client";
+import { Project, Competition, Certification, Experience } from "@/types/sanity";
+import { Folder, Trophy, Award, Calendar, User, Building, MapPin, Briefcase } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-type TabType = 'projects' | 'competitions' | 'certifications';
+type TabType = 'projects' | 'competitions' | 'certifications' | 'experience';
 
 export default function Portfolio() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [competitions, setCompetitions] = useState<Competition[]>([]);
     const [certifications, setCertifications] = useState<Certification[]>([]);
+    const [experiences, setExperiences] = useState<Experience[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<TabType>('projects');
@@ -19,15 +20,17 @@ export default function Portfolio() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [projectsData, competitionsData, certificationsData] = await Promise.all([
+                const [projectsData, competitionsData, certificationsData, experiencesData] = await Promise.all([
                     client.fetch(projectsQuery),
                     client.fetch(competitionsQuery),
                     client.fetch(certificationsQuery),
+                    client.fetch(experiencesQuery),
                 ]);
 
                 setProjects(projectsData);
                 setCompetitions(competitionsData);
                 setCertifications(certificationsData);
+                setExperiences(experiencesData);
             } catch (error) {
                 console.error("Error fetching data:", error);
                 setError("Failed to fetch data");
@@ -40,6 +43,7 @@ export default function Portfolio() {
 
     const tabs = [
         { id: 'projects' as TabType, label: 'Projects', icon: Folder },
+        { id: 'experience' as TabType, label: 'Experience', icon: Briefcase },
         { id: 'competitions' as TabType, label: 'Competitions', icon: Trophy },
         { id: 'certifications' as TabType, label: 'Certifications', icon: Award },
     ];
@@ -50,6 +54,25 @@ export default function Portfolio() {
             year: 'numeric',
             month: 'long'
         });
+    };
+
+    const formatDateShort = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short'
+        });
+    };
+
+    const getEmploymentTypeColor = (type: string) => {
+        const typeColorMap: { [key: string]: string } = {
+            'full-time': 'bg-green-500/20 text-green-300',
+            'part-time': 'bg-blue-500/20 text-blue-300',
+            'contract': 'bg-orange-500/20 text-orange-300',
+            'freelance': 'bg-purple-500/20 text-purple-300',
+            'internship': 'bg-yellow-500/20 text-yellow-300',
+        };
+        return typeColorMap[type] || 'bg-gray-500/20 text-gray-300';
     };
 
     const handleProjectClick = (link?: string) => {
@@ -70,27 +93,33 @@ export default function Portfolio() {
         }
     };
 
+    const handleExperienceClick = (link?: string) => {
+        if (link) {
+            window.open(link, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     const getPositionColor = (position: string) => {
         const pos = position.toLowerCase();
         if (pos.includes('1st') || pos.includes('winner') || pos.includes('champion')) {
             return {
                 badge: 'bg-yellow-500/20 text-yellow-300',
-                trophy: '#FFD700' // Gold
+                trophy: '#FFD700'
             };
         } else if (pos.includes('2nd') || pos.includes('runner')) {
             return {
                 badge: 'bg-gray-400/20 text-gray-300',
-                trophy: '#C0C0C0' // Silver
+                trophy: '#C0C0C0'
             };
         } else if (pos.includes('3rd')) {
             return {
                 badge: 'bg-orange-500/20 text-orange-300',
-                trophy: '#CD7F32' // Bronze
+                trophy: '#CD7F32'
             };
         } else {
             return {
                 badge: 'bg-blue-500/20 text-blue-300',
-                trophy: '#60A5FA' // Blue
+                trophy: '#60A5FA'
             };
         }
     };
@@ -105,8 +134,6 @@ export default function Portfolio() {
                         project.link ? 'cursor-pointer' : ''
                     }`}
                 >
-
-                    {/* Content */}
                     <div className="p-6 flex flex-col gap-4 transition-colors duration-300 group-hover:bg-white/5">
                         <h3 className="text-lg font-bold flex items-center gap-2">
                             <Folder className="w-5 h-5" stroke="#A3A3A3" />
@@ -141,6 +168,106 @@ export default function Portfolio() {
                     </div>
                 </div>
             ))}
+        </div>
+    );
+
+    const renderExperiences = () => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {experiences.map((experience) => (
+                <div
+                    key={experience._id}
+                    onClick={() => handleExperienceClick(experience.companyWebsite)}
+                    className={`rounded-xl border border-gray-700 overflow-hidden group bg-[#0f141f] transition-all duration-300 hover:shadow-lg ${
+                        experience.companyWebsite ? 'cursor-pointer' : ''
+                    }`}
+                >
+                    <div className="p-6 flex flex-col gap-4 transition-colors duration-300 group-hover:bg-white/5">
+                        <div className="flex items-start justify-between">
+                            <h3 className="text-lg font-bold flex items-center gap-2">
+                                <Briefcase className="w-5 h-5" stroke="#60A5FA" />
+                                {experience.jobTitle}
+                            </h3>
+                            {experience.current && (
+                                <span className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-300 font-semibold">
+                                    Current
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="flex flex-col gap-2 text-sm">
+                            <div className="flex items-center gap-2 text-gray-300">
+                                <Building className="w-4 h-4" />
+                                <span className="font-semibold">{experience.company}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-400">
+                                <MapPin className="w-4 h-4" />
+                                {experience.location}
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-400">
+                                <Calendar className="w-4 h-4" />
+                                {formatDateShort(experience.startDate)} - {
+                                experience.current ? 'Present' :
+                                    experience.endDate ? formatDateShort(experience.endDate) : 'Present'
+                            }
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <span className={`px-3 py-1 text-xs rounded-md font-semibold capitalize ${getEmploymentTypeColor(experience.employmentType)}`}>
+                                {experience.employmentType.replace('-', ' ')}
+                            </span>
+                        </div>
+
+                        <p className="text-[#A3A3A3] text-sm">
+                            {experience.description}
+                        </p>
+
+                        {experience.keyAchievements && experience.keyAchievements.length > 0 && (
+                            <div className="space-y-2">
+                                <span className="text-sm font-medium text-gray-300">Key Achievements:</span>
+                                <ul className="list-disc list-inside space-y-1 text-sm text-gray-400">
+                                    {experience.keyAchievements.slice(0, 3).map((achievement, index) => (
+                                        <li key={index}>{achievement}</li>
+                                    ))}
+                                    {experience.keyAchievements.length > 3 && (
+                                        <li className="text-gray-500">+{experience.keyAchievements.length - 3} more...</li>
+                                    )}
+                                </ul>
+                            </div>
+                        )}
+
+                        {experience.techStack && experience.techStack.length > 0 && (
+                            <div className="flex flex-wrap gap-2 font-semibold">
+                                {experience.techStack.map((tech) => (
+                                    <span
+                                        key={tech._id}
+                                        className="px-3 py-1 text-xs rounded-md bg-white/10 text-white/75 flex items-center gap-2"
+                                    >
+                                    <span
+                                        className="w-2 h-2 rounded-full"
+                                        style={{ backgroundColor: tech.color || "#E5E7EB" }}
+                                    ></span>
+                                        {tech.name}
+                                </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ))}
+
+            {experiences.length === 0 && !loading && (
+                <div className="text-center text-gray-400 col-span-full">
+                    <Briefcase className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                    <p>No professional experience found.</p>
+                    <p className="text-sm text-gray-500 mt-2">
+                        Add some in{" "}
+                        <Link href="/studio" className="text-blue-400 hover:underline">
+                            Sanity Studio
+                        </Link>
+                    </p>
+                </div>
+            )}
         </div>
     );
 
@@ -303,6 +430,10 @@ export default function Portfolio() {
             return renderProjects();
         }
 
+        if (activeTab === 'experience') {
+            return renderExperiences();
+        }
+
         if (activeTab === 'competitions') {
             return renderCompetitions();
         }
@@ -318,6 +449,8 @@ export default function Portfolio() {
         switch (activeTab) {
             case 'projects':
                 return "Here are all the projects I've worked on.";
+            case 'experience':
+                return "My professional experience and work history.";
             case 'competitions':
                 return "Competitions and hackathons I've participated in.";
             case 'certifications':
@@ -349,7 +482,7 @@ export default function Portfolio() {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`
-                                    flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200
+                                    flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200
                                     ${activeTab === tab.id
                                     ? 'bg-white/10 text-white shadow-sm'
                                     : 'text-gray-400 hover:text-white hover:bg-white/5'

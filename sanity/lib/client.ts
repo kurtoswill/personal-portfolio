@@ -16,7 +16,7 @@ export function urlFor(source: SanityImage) {
   return builder.image(source)
 }
 
-// GROQ query for fetching all projects (updated with createdDate)
+// GROQ query for fetching all projects
 export const projectsQuery = `*[_type == "project"] | order(createdDate desc) {
   _id,
   title,
@@ -41,7 +41,7 @@ export const projectsQuery = `*[_type == "project"] | order(createdDate desc) {
   }
 }`
 
-// GROQ query for fetching only featured projects (updated with createdDate)
+// GROQ query for fetching only featured projects
 export const featuredProjectsQuery = `*[_type == "project" && featured == true] | order(createdDate desc) {
   _id,
   title,
@@ -87,6 +87,27 @@ export const certificationsQuery = `*[_type == "certification"] | order(dateAcqu
   link
 }`
 
+// GROQ query for fetching all experiences
+export const experiencesQuery = `*[_type == "experience"] | order(startDate desc) {
+  _id,
+  jobTitle,
+  company,
+  location,
+  employmentType,
+  startDate,
+  endDate,
+  current,
+  description,
+  keyAchievements,
+  techStack[]->{
+    _id,
+    name,
+    category,
+    color
+  },
+  companyWebsite
+}`
+
 // GROQ query for fetching recent competitions (optional - for homepage)
 export const recentCompetitionsQuery = `*[_type == "competition"] | order(competitionDate desc)[0...3] {
   _id,
@@ -103,4 +124,15 @@ export const recentCertificationsQuery = `*[_type == "certification"] | order(da
   certificationName,
   dateAcquired,
   link
+}`
+
+// GROQ query for fetching recent experiences (optional - for homepage)
+export const recentExperiencesQuery = `*[_type == "experience"] | order(startDate desc)[0...3] {
+  _id,
+  jobTitle,
+  company,
+  startDate,
+  endDate,
+  current,
+  employmentType
 }`
