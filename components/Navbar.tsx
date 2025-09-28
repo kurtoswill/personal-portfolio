@@ -44,24 +44,10 @@ function Navbar() {
             <div className="mx-auto px-10 sm:px-10 lg:px-[200px]">
                 <div className="flex justify-between items-center h-[80px]">
                     {/* Left: Desktop Links */}
-                    <div className="hidden md:flex space-x-8">
+                    <div className="hidden md:flex space-x-8 items-center">
                         <Link href="/" className={getActiveLinkStyle("/")}>
                             KURT OSWILL
                         </Link>
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="text-white focus:outline-none"
-                        >
-                            {isOpen ? <X size={28} /> : <Menu size={28} />}
-                        </button>
-                    </div>
-
-                    {/* Right: Desktop Links */}
-                    <div className="hidden md:flex space-x-6">
                         <Link
                             href="/portfolio"
                             className={getActiveLinkStyle("/portfolio")}
@@ -78,9 +64,26 @@ function Navbar() {
                         </a>
                         <Link
                             href="/CV-2.pdf"
-                            className={getActiveLinkStyle("/links")}
+                            className={externalLinkStyle}
                         >
-                            CV
+                            Resume
+                        </Link>
+                    </div>
+
+                    {/* Mobile Menu Button */}
+                    <div className="md:hidden">
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="text-white focus:outline-none"
+                        >
+                            {isOpen ? <X size={28} /> : <Menu size={28} />}
+                        </button>
+                    </div>
+
+                    {/* Right: Desktop Links */}
+                    <div className="hidden md:flex space-x-6">
+                        <Link href="/#contact" className={externalLinkStyle}>
+                            Contact me
                         </Link>
                     </div>
                 </div>
@@ -115,7 +118,7 @@ function Navbar() {
                             Timeline
                         </Link>
                         <a
-                            href="https://github.com"
+                            href="https://github.com/kurtoswill"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={externalLinkStyle}
@@ -124,11 +127,18 @@ function Navbar() {
                             GitHub
                         </a>
                         <Link
-                            href="/links"
-                            className={getActiveLinkStyle("/links")}
+                            href="/CV-2.pdf"
+                            className={externalLinkStyle}
                             onClick={() => setIsOpen(false)}
                         >
-                            RESUME
+                            Resume
+                        </Link>
+                        <Link
+                            href="/#contact"
+                            className={externalLinkStyle}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Contact me
                         </Link>
                     </div>
                 </div>

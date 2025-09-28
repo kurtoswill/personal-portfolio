@@ -127,12 +127,21 @@ export const recentCertificationsQuery = `*[_type == "certification"] | order(da
 }`
 
 // GROQ query for fetching recent experiences (optional - for homepage)
-export const recentExperiencesQuery = `*[_type == "experience"] | order(startDate desc)[0...3] {
+export const recentExperiencesQuery = `*[_type == "experience"] | order(startDate desc)[0...6] {
   _id,
   jobTitle,
   company,
+  location,
+  employmentType,
   startDate,
   endDate,
   current,
-  employmentType
+  description,
+  keyAchievements,
+  techStack[]->{
+    _id,
+    name,
+    category,
+    color
+  }
 }`

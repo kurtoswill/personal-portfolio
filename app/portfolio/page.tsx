@@ -15,7 +15,11 @@ export default function Portfolio() {
     const [experiences, setExperiences] = useState<Experience[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState<TabType>('projects');
+    const [activeTab, setActiveTab] = useState<TabType>('experience');
+
+    const changeTab = (id: TabType) => {
+        setActiveTab(id);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,11 +46,12 @@ export default function Portfolio() {
     }, []);
 
     const tabs = [
-        { id: 'projects' as TabType, label: 'Projects', icon: Folder },
         { id: 'experience' as TabType, label: 'Experience', icon: Briefcase },
+        { id: 'projects' as TabType, label: 'Projects', icon: Folder },
         { id: 'competitions' as TabType, label: 'Competitions', icon: Trophy },
         { id: 'certifications' as TabType, label: 'Certifications', icon: Award },
     ];
+
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -73,6 +78,19 @@ export default function Portfolio() {
             'internship': 'bg-yellow-500/20 text-yellow-300',
         };
         return typeColorMap[type] || 'bg-gray-500/20 text-gray-300';
+    };
+
+    const getDuration = (startDateStr?: string, endDateStr?: string, current?: boolean) => {
+        if (!startDateStr) return '';
+        const start = new Date(startDateStr);
+        const end = current || !endDateStr ? new Date() : new Date(endDateStr);
+        let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+        if (months < 0) months = 0;
+        const years = Math.floor(months / 12);
+        const remMonths = months % 12;
+        const yearPart = years > 0 ? `${years} yr${years > 1 ? 's' : ''}` : '';
+        const monthPart = remMonths > 0 ? `${remMonths} mo${remMonths > 1 ? 's' : ''}` : '';
+        return [yearPart, monthPart].filter(Boolean).join(' ') || '< 1 mo';
     };
 
     const handleProjectClick = (link?: string) => {
@@ -183,9 +201,9 @@ export default function Portfolio() {
                 >
                     <div className="p-6 flex flex-col gap-4 transition-colors duration-300 group-hover:bg-white/5">
                         <div className="flex items-start justify-between">
-                            <h3 className="text-lg font-bold flex items-center gap-2">
-                                <Briefcase className="w-5 h-5" stroke="#60A5FA" />
-                                {experience.jobTitle}
+                            <h3 className="text-lg font-bold flex items-start gap-2 leading-tight">
+                                <Briefcase className="w-5 h-5 flex-shrink-0 self-start mt-0.5" stroke="#60A5FA" />
+                                <span className="whitespace-normal break-words leading-tight">{experience.jobTitle}</span>
                             </h3>
                             {experience.current && (
                                 <span className="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-300 font-semibold">
@@ -203,18 +221,18 @@ export default function Portfolio() {
                                 <MapPin className="w-4 h-4" />
                                 {experience.location}
                             </div>
-                            <div className="flex items-center gap-2 text-gray-400">
+                            <div className="flex items-center gap-2 text-gray-400 flex-wrap">
                                 <Calendar className="w-4 h-4" />
-                                {formatDateShort(experience.startDate)} - {
-                                experience.current ? 'Present' :
-                                    experience.endDate ? formatDateShort(experience.endDate) : 'Present'
-                            }
+                                {formatDateShort(experience.startDate)} - {experience.current ? 'Present' : (experience.endDate ? formatDateShort(experience.endDate) : 'Present')}
+                                <span className="px-2 py-0.5 text-xs rounded-md bg-white/10 text-white/75 font-semibold">
+                                    {getDuration(experience.startDate, experience.endDate, experience.current)}
+                                </span>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-2">
                             <span className={`px-3 py-1 text-xs rounded-md font-semibold capitalize ${getEmploymentTypeColor(experience.employmentType)}`}>
-                                {experience.employmentType.replace('-', ' ')}
+                                {experience.employmentType && experience.employmentType.replace('-', ' ')}
                             </span>
                         </div>
 
@@ -243,12 +261,12 @@ export default function Portfolio() {
                                         key={tech._id}
                                         className="px-3 py-1 text-xs rounded-md bg-white/10 text-white/75 flex items-center gap-2"
                                     >
-                                    <span
-                                        className="w-2 h-2 rounded-full"
-                                        style={{ backgroundColor: tech.color || "#E5E7EB" }}
-                                    ></span>
+                                        <span
+                                            className="w-2 h-2 rounded-full"
+                                            style={{ backgroundColor: tech.color || "#E5E7EB" }}
+                                        ></span>
                                         {tech.name}
-                                </span>
+                                    </span>
                                 ))}
                             </div>
                         )}
@@ -388,7 +406,7 @@ export default function Portfolio() {
         </div>
     );
 
-    const renderContent = () => {
+    const renderContent = (tabArg: TabType = activeTab) => {
         if (loading) {
             return (
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -413,7 +431,7 @@ export default function Portfolio() {
             return <p className="text-red-400 text-center">{error}</p>;
         }
 
-        if (activeTab === 'projects') {
+        if (tabArg === 'projects') {
             if (projects.length === 0) {
                 return (
                     <div className="text-center">
@@ -430,15 +448,15 @@ export default function Portfolio() {
             return renderProjects();
         }
 
-        if (activeTab === 'experience') {
+        if (tabArg === 'experience') {
             return renderExperiences();
         }
 
-        if (activeTab === 'competitions') {
+        if (tabArg === 'competitions') {
             return renderCompetitions();
         }
 
-        if (activeTab === 'certifications') {
+        if (tabArg === 'certifications') {
             return renderCertifications();
         }
 
@@ -479,7 +497,7 @@ export default function Portfolio() {
                     <div className="relative">
                         <select
                             value={activeTab}
-                            onChange={(e) => setActiveTab(e.target.value as TabType)}
+                            onChange={(e) => changeTab(e.target.value as TabType)}
                             className="w-full bg-[#0f141f] border border-gray-700 rounded-lg px-4 py-3 text-white appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             {tabs.map((tab) => (
@@ -503,7 +521,7 @@ export default function Portfolio() {
                         return (
                             <button
                                 key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
+                                onClick={() => changeTab(tab.id)}
                                 className={`
                                     flex items-center gap-2 px-3 md:px-4 py-2 rounded-md text-xs md:text-sm font-semibold transition-all duration-200 whitespace-nowrap
                                     ${activeTab === tab.id
@@ -525,7 +543,7 @@ export default function Portfolio() {
                 {getTabDescription()}
             </p>
 
-            {renderContent()}
+            {renderContent(activeTab)}
         </section>
     );
 }

@@ -2,7 +2,7 @@
 
 import Contacts from "@/components/Contacts";
 import { GridBackground } from "@/components/Grid";
-import Projects from "@/components/HeroProjects";
+import HeroExperience from "@/components/HeroExperience";
 import TechnologyList from "@/components/Technologies";
 import { useEffect, useState } from "react";
 
@@ -140,34 +140,24 @@ export default function Home() {
       <section className="bg-[#080c14] py-12 md:py-20 text-center">
         <div className="max-w-4xl mx-auto font-medium">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">About Me.</h2>
-          <p className="text-lg md:text-xl text-white/75 leading-relaxed">
-            I’m a <span className="text-white">Front-End Developer</span> moving
-            into <span className="text-white">Full-Stack Development</span>{" "}
-            through <span className="text-white">hackathons</span>. I mainly
-            work with <span className="text-white">Next.js</span> and{" "}
-            <span className="text-white">Supabase</span>, creating projects that{" "}
-            <span className="text-white">make an impact</span>.
+          <p className="text-lg md:text-xl text-white/75 leading-relaxed mt-4">
+            <span className="text-white">Business Developer</span> at{" "}
+            <span className="text-white">Blockchain Campus Conference</span> and{" "}
+            <span className="text-white">Volunteer Head</span> driving blockchain innovation and strategic partnerships.
           </p>
           <p className="text-lg md:text-xl text-white/75 leading-relaxed mt-4">
-            I’m a <span className="text-white">Student Developer</span> at{" "}
-            <span className="text-white">AWS Spade</span> and had my first
-            internship at <span className="text-white">Bitskwela</span>. I enjoy{" "}
-            <span className="text-white">gaming</span>,{" "}
-            <span className="text-white">traveling</span>, movies, and{" "}
-            <span className="text-white">F1</span>.
+            Former <span className="text-white">Front-End Developer Intern</span> at{" "}
+            <span className="text-white">Bitskwela</span> with hands-on blockchain industry experience.{" "}
+            <span className="text-white">Base contributor</span> exploring the decentralized ecosystem.
           </p>
           <p className="text-lg md:text-xl text-white/75 leading-relaxed mt-4">
-            My goal is to{" "}
-            <span className="text-white">learn as much as I can </span>
-            in college while exploring{" "}
-            <span className="text-white">business </span>
-            and <span className="text-white">startups</span>.
+            I bridge <span className="text-white">technology and business</span>, building communities while exploring entrepreneurship in the decentralized future.
           </p>
         </div>
       </section>
 
-      {/* Projects */}
-      <Projects />
+      {/* Experience */}
+      <HeroExperience />
 
       {/* Technologies */}
       <TechnologyList />
