@@ -54,20 +54,6 @@ function Navbar() {
                         >
                             Portfolio
                         </Link>
-                        <a
-                            href="https://github.com/kurtoswill"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={externalLinkStyle}
-                        >
-                            GitHub
-                        </a>
-                        <Link
-                            href="/CV-2.pdf"
-                            className={externalLinkStyle}
-                        >
-                            Resume
-                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
