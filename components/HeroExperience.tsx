@@ -61,7 +61,7 @@ export default function HeroExperience() {
 
   if (loading) {
     return (
-      <section className="py-16 text-white px-6 sm:px-10 lg:px-[150px]">
+      <section className="py-16 text-white px-4 sm:px-6 lg:px-0">
         <div className="w-full">
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center">Experience</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -82,7 +82,7 @@ export default function HeroExperience() {
 
   if (error) {
     return (
-      <section className="py-16 text-white px-6 sm:px-10 lg:px-[150px]">
+      <section className="py-16 text-white px-4 sm:px-6 lg:px-0">
         <div className="w-full">
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center">Experience</h2>
           <p className="text-red-400 text-center">{error}</p>
@@ -92,7 +92,7 @@ export default function HeroExperience() {
   }
 
   return (
-    <section className="py-16 sm:py-20 text-white px-6 sm:px-10 lg:px-[150px]">
+    <section id="experience" className="scroll-mt-24 py-16 sm:py-20 text-white px-4 sm:px-6 lg:px-0">
       <div className="w-full">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-10 text-center">Experience.</h2>
         {experiences.length === 0 ? (

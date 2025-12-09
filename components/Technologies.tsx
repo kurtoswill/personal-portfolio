@@ -14,7 +14,21 @@ import {
   SiSanity,
   SiNpm,
   SiGithub,
+  SiNotion,
+  SiOpenai,
+  SiClaude,
+  SiCanva,
+  SiDavinciresolve,
+  SiAdobephotoshop,
+  SiAdobelightroom,
 } from "react-icons/si";
+import {
+  FcGoogle,
+} from "react-icons/fc";
+import {
+  FaMeta
+} from "react-icons/fa6";
+
 import { IconType } from "react-icons";
 
 const technologiesQuery = `*[_type == "technology"] | order(name asc) {
@@ -36,6 +50,15 @@ const iconMap: Record<string, { icon: IconType; overrideColor?: string }> = {
   NPM: { icon: SiNpm },
   Github: { icon: SiGithub },
   Sanity: { icon: SiSanity, overrideColor: "#ffffff" },
+  Notion: { icon: SiNotion },
+  Google: { icon: FcGoogle },
+  Meta: { icon: FaMeta },
+  ChatGPT: { icon: SiOpenai },
+  Claude: { icon: SiClaude },
+  Canva: { icon: SiCanva },
+  DavinciResolve: { icon: SiDavinciresolve },
+  Photoshop: { icon: SiAdobephotoshop },
+  Lightroom: { icon: SiAdobelightroom },
 };
 
 export default function TechnologyList() {
@@ -46,7 +69,7 @@ export default function TechnologyList() {
   }, []);
 
   return (
-    <section className="py-20 px-6 sm:px-10 lg:px-20 xl:px-[150px] text-white">
+    <section id="technologies" className="scroll-mt-24 py-20 px-4 sm:px-6 lg:px-0 text-white">
       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-10 text-center">
         Technologies I Use.
       </h2>

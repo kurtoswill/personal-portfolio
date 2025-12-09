@@ -41,17 +41,14 @@ function Navbar() {
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-[#080c14]/90 backdrop-blur-md border-b border-gray-800 uppercase">
-            <div className="mx-auto px-10 sm:px-10 lg:px-[200px]">
+            <div className="mx-auto px-4 sm:px-6 lg:px-[150px]">
                 <div className="flex justify-between items-center h-[80px]">
                     {/* Left: Desktop Links */}
                     <div className="hidden md:flex space-x-8 items-center">
-                        <Link href="/" className={getActiveLinkStyle("/")}>
+                        <Link href="/" className={getActiveLinkStyle("/")}> 
                             KURT OSWILL
                         </Link>
-                        <Link
-                            href="/portfolio"
-                            className={getActiveLinkStyle("/portfolio")}
-                        >
+                        <Link href="/portfolio" className={getActiveLinkStyle("/portfolio")}>
                             Portfolio
                         </Link>
                     </div>
@@ -67,10 +64,30 @@ function Navbar() {
                     </div>
 
                     {/* Right: Desktop Links */}
-                    <div className="hidden md:flex space-x-6">
-                        <Link href="/#contact" className={externalLinkStyle}>
-                            Contact me
+                    <div className="hidden md:flex items-center space-x-6">
+                        <Link href="/#about" className={externalLinkStyle}>
+                            About
                         </Link>
+                        <Link href="/#experience" className={externalLinkStyle}>
+                            Experience
+                        </Link>
+                        <Link href="/#technologies" className={externalLinkStyle}>
+                            Technologies
+                        </Link>
+                        <Link href="/#contact" className={externalLinkStyle}>
+                            Contacts
+                        </Link>
+                        {/* Actions: CTA */}
+                        <div className="flex items-center pl-3">
+                            <a
+                                href="https://calendly.com/kurtoswillmc/30min"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block border border-purple-500 text-purple-400 font-semibold rounded-md py-2 px-4 hover:bg-purple-600 hover:border-purple-600 hover:text-white transition-colors duration-300"
+                            >
+                                Book a Discovery Call
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -95,6 +112,27 @@ function Navbar() {
                             onClick={() => setIsOpen(false)}
                         >
                             Portfolio
+                        </Link>
+                        <Link
+                            href="/#about"
+                            className={externalLinkStyle}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            About
+                        </Link>
+                        <Link
+                            href="/#experience"
+                            className={externalLinkStyle}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Experience
+                        </Link>
+                        <Link
+                            href="/#technologies"
+                            className={externalLinkStyle}
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Technologies
                         </Link>
                         <Link
                             href="/timeline"
@@ -124,8 +162,20 @@ function Navbar() {
                             className={externalLinkStyle}
                             onClick={() => setIsOpen(false)}
                         >
-                            Contact me
+                            Contacts
                         </Link>
+                        {/* Action: CTA only */}
+                        <div className="flex items-center pt-2">
+                            <a
+                                href="https://calendly.com/kurtoswillmc/30min"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block border border-purple-500 text-purple-400 font-semibold rounded-md py-2 px-4 hover:bg-purple-600 hover:border-purple-600 hover:text-white transition-colors duration-300"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                Book a Discovery Call
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

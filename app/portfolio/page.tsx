@@ -479,7 +479,7 @@ export default function Portfolio() {
     };
 
     return (
-        <section className="py-20 px-6 sm:px-10 lg:px-[150px] bg-[#080c14] text-white">
+        <section className="py-20 px-6 sm:px-10 lg:px-0 bg-[#080c14] text-white">
             <GridBackground
                 gridSize={100}
                 gridColor="#e4e4e7"

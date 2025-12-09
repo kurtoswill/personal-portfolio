@@ -49,13 +49,13 @@ export default function Contact() {
       name: "Facebook",
       detail: "Kurt Oswill McCarver",
       icon: <FaFacebook size={20} color="#1877F2" />,
-      href: "https://facebook.com/scrypt06",
+      href: "https://www.facebook.com/kurtoswillmc/",
     },
     {
       name: "X",
-      detail: "@scrypt06",
+      detail: "@krtwllmc",
       icon: <FaXTwitter size={20} color="#ffffff" />,
-      href: "https://twitter.com/scrypt06",
+      href: "https://x.com/krtwllmc",
     },
     {
       name: "Email",
@@ -72,7 +72,7 @@ export default function Contact() {
   ];
 
   return (
-      <section id="contact" className="py-16 px-6 sm:px-10 lg:px-[150px] text-white">
+      <section id="contact" className="py-16 px-4 sm:px-6 lg:px-0 text-white">
         <h2 className="text-4xl sm:text-5xl font-bold text-center mb-4">
           Contact me.
         </h2>
@@ -108,7 +108,7 @@ export default function Contact() {
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Juan Dela Cruz"
+                    placeholder="John Doe"
                     className="w-full py-2 px-3 rounded-md border border-gray-700 bg-gray-900 text-white focus:border-gray-500 outline-none text-sm sm:text-base"
                     required
                     disabled={isSubmitting}
@@ -123,7 +123,7 @@ export default function Contact() {
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="juan@delacruz.com"
+                    placeholder="johndoe@gmail.com"
                     className="w-full py-2 px-3 rounded-md border border-gray-700 bg-gray-900 text-white focus:border-gray-500 outline-none text-sm sm:text-base"
                     required
                     disabled={isSubmitting}
@@ -154,7 +154,7 @@ export default function Contact() {
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center justify-center gap-2 bg-white text-black font-semibold rounded-md py-2 px-5 w-full sm:w-auto hover:bg-gray-200 transition-colors duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 bg-white text-black font-semibold rounded-md py-2 px-5 w-full sm:w-auto hover:bg-purple-600 hover:text-white transition-colors duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Sending...' : 'Send'}
               <ArrowRight
