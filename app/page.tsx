@@ -40,7 +40,7 @@ export default function Home() {
               </a>
 
                 <a
-                    href="https://calendly.com/kurtoswillmc/30min"
+                    href="https://linktr.ee/studionomads"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="border border-white text-white font-semibold rounded-md py-3 px-6 hover:bg-white hover:border-white hover:text-[#080c14] transition-colors duration-300 flex gap-2"
